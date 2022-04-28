@@ -26,6 +26,7 @@ class AuthController extends Controller
 
         return ApiResponseTrait::sendError('Unsuccessful Login', 401);
     }
+
     public function register(Request $request) {
         $validated = $request->validate([
             'name' => 'required|string|max:15',
@@ -46,6 +47,17 @@ class AuthController extends Controller
             'id' => $user->id,
             'email' => $validated['email'],
             'token' => $token
+        ], 201);
+    }
+
+    public function logout() {
+        $user = auth()->user();
+
+        $user->tokens()->delete();
+
+        return ApiResponseTrait::sendResponse('Logout Sucesss', [
+            'email' => $user->email,
         ]);
     }
+
 }

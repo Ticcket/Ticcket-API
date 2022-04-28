@@ -2,11 +2,22 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+/*
+|------------------------------------
+| Response Resources
+|------------------------------------
+*/
+use App\Http\Resources\UserResource;
+/*
+|------------------------------------
+| Controllers
+|------------------------------------
+*/
 use App\Http\Controllers\Auth\API\AuthController;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes
+| API Routes => http://localhost:8000/api/
 |--------------------------------------------------------------------------
 |
 | Here is where you can register API routes for your application. These
@@ -16,9 +27,10 @@ use App\Http\Controllers\Auth\API\AuthController;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    return new UserResource($request->user());
 });
 
-
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::middleware('api.key')->group(function() {
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/login', [AuthController::class, 'login']);
+});
