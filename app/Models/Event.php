@@ -13,6 +13,7 @@ class Event extends Model
         'title',
         'description',
         'logo',
+        'creator',
         'start_at',
         'end_at',
     ];
@@ -37,5 +38,9 @@ class Event extends Model
 
     public function feedback() {
         return $this->hasMany(Feedback::class);
+    }
+
+    public function creator() {
+        return $this->hasOne(User::class, 'creator');
     }
 }

@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string("title", 100);
             $table->text("description");
-            $table->string("logo", 100);
+            $table->string("logo", 100)->nullable();
+            $table->foreignId('creator')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->date("start_at");
             $table->date("end_at");
             $table->timestamps();
@@ -31,6 +32,10 @@ return new class extends Migration
      */
     public function down()
     {
+        Schema::table('events', function (Blueprint $table) {
+            $table->dropForeign('creator');
+        });
+
         Schema::dropIfExists('events');
     }
 };
