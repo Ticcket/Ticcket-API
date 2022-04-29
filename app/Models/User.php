@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class User extends Authenticatable
 {
@@ -53,5 +54,13 @@ class User extends Authenticatable
 
     public function feedback() {
         return $this->hasMany(Feedback::class);
+    }
+
+    public static function getUserByToken($token) {
+        [$id, $user_token] = explode('|', $token, 2);
+
+        $token_data = PersonalAccessToken::where('token', hash('sha256', $user_token))->first();
+
+        return $token_data->tokenable;
     }
 }

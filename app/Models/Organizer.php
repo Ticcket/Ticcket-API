@@ -9,6 +9,8 @@ class Organizer extends Model
 {
     use HasFactory;
 
+    public $fillable = ['user_id', 'event_id'];
+
     public function announcement() {
         return $this->belongsToMany(Announcement::class);
     }

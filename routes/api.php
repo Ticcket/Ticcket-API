@@ -14,6 +14,7 @@ use App\Http\Resources\UserResource;
 |------------------------------------
 */
 use App\Http\Controllers\Auth\API\AuthController;
+use App\Http\Controllers\SharedTraits\EmailTrait;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,4 +34,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::middleware('api.key')->group(function() {
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
+});
+
+Route::get('/test/email', function () {
+    EmailTrait::sendEmail();
+    return "success";
 });
