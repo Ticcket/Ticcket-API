@@ -21,7 +21,7 @@ class AuthController extends Controller
 
             return ApiResponseTrait::sendResponse('Successful Login', [
                 'token' => $token
-            ], 201);
+            ]);
         }
 
         return ApiResponseTrait::sendError('Unsuccessful Login', 401);
@@ -47,7 +47,7 @@ class AuthController extends Controller
             'id' => $user->id,
             'email' => $validated['email'],
             'token' => $token
-        ], 201);
+        ]);
     }
 
     public function logout() {
