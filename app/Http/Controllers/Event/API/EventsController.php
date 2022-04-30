@@ -57,7 +57,7 @@ class EventsController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:100',
-            'description' => 'required|string|max:255',
+            'description' => 'required|string|max:255|min:10',
             'logo' => 'required|mimes:png,jpg,jpeg|max:10000',
             'start_at' => 'required|date_format:Y-m-d|after:yesterday',
             'end_at' => 'required|date_format:Y-m-d|after_or_equal:start_date',
@@ -67,13 +67,7 @@ class EventsController extends Controller
         $user = User::getUserByToken($request->header('Authorization'));
         $validated['creator'] = $user->id;
 
-        $img = $request->file('logo');
-
-        $img_name = time() . '-' . strtolower($validated['title']) . '.' .$img->extension();
-
-        $img->storeAs('/', $img_name, 'events');
-
-        $validated['logo'] = 'storage/events/' . $img_name;
+        $validated['logo'] = uploadImage($request->file('logo'), $validated['title']);
 
 
         DB::beginTransaction();
@@ -107,18 +101,10 @@ class EventsController extends Controller
     {
         $event = Event::find($id);
 
+        if(empty($event))
+            return ApiResponseTrait::sendError("Can't Find Event");
+
         return ApiResponseTrait::sendResponse('Got Event Successfully', $event);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Event  $event
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-
     }
 
     /**
@@ -130,7 +116,45 @@ class EventsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $event = Event::find($id);
+
+        if(empty($event))
+            return ApiResponseTrait::sendError("Can't Find Event");
+
+        if (auth()->user()->id != $event->creator)
+            return ApiResponseTrait::sendError("Permission Denied", 403);
+
+        $validated = $request->validate([
+            'title' => 'string|max:100',
+            'description' => 'string|max:255|min:10',
+            'start_at' => 'date_format:Y-m-d|after:yesterday',
+            'end_at' => 'date_format:Y-m-d|after_or_equal:start_date',
+        ]);
+
+        $event->update($validated);
+
+        return ApiResponseTrait::sendResponse('Event Updated Successfully', []);
+    }
+
+    public function changeLogo(Request $request, $id) {
+
+        $event = Event::find($id);
+
+        if(empty($event))
+            return ApiResponseTrait::sendError("Can't Find Event");
+
+        if (auth()->user()->id != $event->creator)
+            return ApiResponseTrait::sendError("Permission Denied", 403);
+
+        $request->validate([
+            'logo' => 'required|mimes:png,jpg,jpeg|max:10000',
+        ]);
+
+        $validated['logo'] = uploadImage($request->file('logo'), $event->title);
+
+        $event->update($validated);
+
+        return ApiResponseTrait::sendResponse('Event Logo Updated Successfully', []);
     }
 
     /**
@@ -143,7 +167,15 @@ class EventsController extends Controller
     {
         $event = Event::find($id);
 
-        return $event->delete();
+        if (empty($event))
+            return ApiResponseTrait::sendError('Unsuccessful Delete');
 
+
+        if (auth()->user()->id != $event->creator)
+            return ApiResponseTrait::sendError("Permission Denied", 403);
+
+        $event->delete();
+
+        return ApiResponseTrait::sendResponse("Event Deleted Successfully", []);
     }
 }

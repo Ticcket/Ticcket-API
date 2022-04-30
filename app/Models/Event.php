@@ -22,6 +22,7 @@ class Event extends Model
     ];
 
     public $hidden = [
+        'deleted_at',
         'created_at',
         'updated_at',
     ];

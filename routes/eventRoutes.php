@@ -21,8 +21,11 @@ use App\Http\Controllers\Event\API\EventsController;
 |--------------------------------------------------------------------------
 */
 
-Route::resource('/events', EventsController::class)->except(['create', 'edit']);
+Route::apiResource('/events', EventsController::class);
 
 Route::group(['prefix' => 'events'], function () {
-    Route::get('/search', [EventsController::class, 'search'])->name('events.search');
+
+    Route::post('/{id}/logo', [EventsController::class, 'changeLogo'])->name("events.update.logo");
+
+    Route::get('/e/search', [EventsController::class, 'search'])->name('events.search');
 });
