@@ -14,7 +14,9 @@ use App\Http\Resources\UserResource;
 |------------------------------------
 */
 use App\Http\Controllers\Auth\API\AuthController;
+use App\Http\Controllers\Feedback\API\FeedbacksController;
 use App\Http\Controllers\SharedTraits\EmailTrait;
+use SebastianBergmann\CodeUnit\FunctionUnit;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +32,13 @@ use App\Http\Controllers\SharedTraits\EmailTrait;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return new UserResource($request->user());
 });
+
+// General One-Use Routes:
+Route::middleware("auth:sanctum")->group(Function () {
+    Route::post('/feedbacks', [FeedbacksController::class, 'store'])->name('feedbacks.store');
+    Route::delete('/feedbacks/{id}', [FeedbacksController::class, 'destroy'])->name("feedbacks.destroy");
+});
+
 
 Route::middleware('api.key')->group(function() {
     Route::post('/register', [AuthController::class, 'register']);

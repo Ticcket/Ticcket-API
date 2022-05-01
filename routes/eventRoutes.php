@@ -28,4 +28,6 @@ Route::group(['prefix' => 'events'], function () {
     Route::post('/{id}/logo', [EventsController::class, 'changeLogo'])->name("events.update.logo");
 
     Route::get('/e/search', [EventsController::class, 'search'])->name('events.search');
+
+    Route::get('/e/top', [EventsController::class, 'topEvents'])->name('events.top');
 });

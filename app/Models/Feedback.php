@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Feedback extends Model
 {
     use HasFactory;
+
+    public $table = 'feedbacks';
+
+    public $fillable = [
+        'rating',
+        'comment',
+        'user_id',
+        'event_id',
+    ];
+
 }
