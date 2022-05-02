@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->tinyInteger("rating")->unsigned();
             $table->text("comment");
-            $table->bigInteger('user_id')->unsigned()->unique();
+            $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('event_id')->unsigned();
             $table->timestamps();
 

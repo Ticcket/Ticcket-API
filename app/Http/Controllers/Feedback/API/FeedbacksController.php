@@ -17,6 +17,10 @@ class FeedbacksController extends Controller
             'event_id' => 'required|numeric|exists:events,id',
         ]);
 
+        $f = Feedback::where('user_id', auth()->user()->id)->where('event_id', $validated['event_id'])->first();
+        if (!empty($f))
+            return ApiResponseTrait::sendError('User Has Ticket Already', 409);
+
         $validated['user_id'] = auth()->user()->id;
 
         $feedback = Feedback::create($validated);

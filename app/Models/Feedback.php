@@ -18,4 +18,9 @@ class Feedback extends Model
         'event_id',
     ];
 
+    public $hiddin = [
+        'updated_at',
+        'created_at',
+    ];
+
 }
