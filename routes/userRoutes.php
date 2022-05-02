@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\API\AuthController;
+use App\Http\Controllers\User\API\UsersController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -15,5 +16,6 @@ Route::get('/test', function () {
     return 'success';
 });
 
+Route::post('/u/photo', [UsersController::class, 'uploadPhoto'])->name('user.u.photo');
 
-Route::get('/logout', [AuthController::class, 'logout']);
+Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
