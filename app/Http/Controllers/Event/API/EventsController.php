@@ -163,6 +163,9 @@ class EventsController extends Controller
             'logo' => 'required|mimes:png,jpg,jpeg|max:10000',
         ]);
 
+        if (!empty($event->logo))
+            deleteImage($event->logo);
+
         $validated['logo'] = uploadImage($request->file('logo'), $event->title);
 
         $event->update($validated);

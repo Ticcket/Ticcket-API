@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\Storage;
 
 function uploadImage($img, $title, $disk = 'events') {
 
@@ -7,5 +7,12 @@ function uploadImage($img, $title, $disk = 'events') {
 
     $img->storeAs('/', $img_name, $disk);
 
-    return 'storage/events/' . $img_name;
+    return 'storage/'. $disk . '/'. $img_name;
+}
+
+function deleteImage($image, $disk = 'events') {
+    $ph = explode("/", $image);
+    $ph = end($ph);
+    Storage::disk('users')->delete($ph);
+
 }
