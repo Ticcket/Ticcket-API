@@ -16,6 +16,11 @@ class Ticket extends Model
         'scanned',
     ];
 
+    public $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
     public function user() {
         return $this->belongsTo(User::class);
     }
