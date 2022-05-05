@@ -64,6 +64,7 @@ class EventsController extends Controller
 
         $validated['logo'] = uploadImage($request->file('logo'), $validated['title']);
 
+        $validated['creator'] = auth()->user()->id;
 
         DB::beginTransaction();
         try {
