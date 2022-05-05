@@ -27,11 +27,13 @@ class TicketsController extends Controller
         $t = Ticket::where('user_id', $validated['user_id'])->where('event_id', $validated['event_id'])->first();
 
         if(!empty($t))
-            return ApiResponseTrait::sendError('User Has Ticket Already', 409);
+            return ApiResponseTrait::sendError('User Has A Ticket Already', 409);
 
         $validated['token'] = Str::random(10);
 
         $ticket = Ticket::create($validated);
+
+        $ticket->url = "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$ticket->token}&choe=UTF-8";
 
         return ApiResponseTrait::sendResponse("Ticket Created Successfully", $ticket);
     }
