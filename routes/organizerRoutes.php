@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\Route;
 |------------------------------------
 */
 use App\Http\Controllers\Organizer\API\OrganizersController;
-use App\Models\Organizer;
-
 /*
 |--------------------------------------------------------------------------
 | Organizer API Routes => http://localhost:8000/api/organizers
@@ -23,4 +21,5 @@ use App\Models\Organizer;
 Route::group(['prefix' => 'organizers'], function (){
     Route::post('/', [OrganizersController::class, 'store']);
     Route::delete('/', [OrganizersController::class, 'destroy']);
+    Route::post('/scan', [OrganizersController::class, 'scanTicket']);
 });

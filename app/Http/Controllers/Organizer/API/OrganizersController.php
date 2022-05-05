@@ -7,27 +7,37 @@ use Illuminate\Http\Request;
 use App\Http\Requests\OragnizerRequest;
 use App\Http\Controllers\SharedTraits\ApiResponseTrait;
 use App\Models\User;
+use App\Models\Ticket;
 
 class OrganizersController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\Request
+     * @return \App\Http\Controllers\SharedTraits\ApiResponseTrait
      */
-    public function index()
+    public function scanTicket(Request $request)
     {
-        //
-    }
+        $validatated = $request->validate([
+            'ticket' => "required|string|max:10|exists:tickets,token",
+            "event_id" => "required|numeric|exists:events,id",
+        ]);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        if(!auth()->user()->organizers()->where('event_id', $validatated['event_id'])->exists())
+            return ApiResponseTrait::sendError("Permission Denied", 403);
+
+        $ticket = Ticket::where('token', $validatated['ticket'])->where('event_id', $validatated['event_id'])->first();
+        if(empty($ticket))
+        return ApiResponseTrait::sendError("Invalid Ticket", 422);
+
+        // ***********************************
+        // Give Error If Already Scanned ?
+        // ***********************************
+
+        $ticket->update(['scanned' => 1]);
+
+        return ApiResponseTrait::sendResponse("Scanned Successfully", $ticket);
     }
 
     /**
