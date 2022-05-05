@@ -32,8 +32,8 @@ class Event extends Model
         return $this->hasMany(Ticket::class);
     }
 
-    public function organizer() {
-        return $this->belongsToMany(Organizer::class);
+    public function organizers() {
+        return $this->belongsToMany(User::class, 'organizers');
     }
 
     public function announcement() {
@@ -45,6 +45,6 @@ class Event extends Model
     }
 
     public function creator() {
-        return $this->hasOne(User::class, 'creator');
+        return $this->belongsTo(User::class, 'creator');
     }
 }

@@ -6,9 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use App\Http\Controllers\SharedTraits\ApiResponseTrait;
-use App\Models\Organizer;
 use Illuminate\Support\Facades\DB;
-use App\Models\User;
 
 class EventsController extends Controller
 {
@@ -64,9 +62,6 @@ class EventsController extends Controller
         ]);
 
 
-        $user = User::getUserByToken($request->header('Authorization'));
-        $validated['creator'] = $user->id;
-
         $validated['logo'] = uploadImage($request->file('logo'), $validated['title']);
 
 
@@ -74,10 +69,7 @@ class EventsController extends Controller
         try {
             $event = Event::create($validated);
 
-            Organizer::create([
-                'user_id' => $user->id,
-                'event_id' => $event->id,
-            ]);
+            $event->organizers()->attach(auth()->user()->id);
 
             DB::commit();
         }catch(\Exception $e){
@@ -118,6 +110,17 @@ class EventsController extends Controller
         $topEvents = Event::join('feedbacks', 'events.id', '=', 'feedbacks.event_id')->orderBy('rating', 'DESC')->limit($limit)->get();
 
         return ApiResponseTrait::sendResponse('Get Top Events', $topEvents);
+    }
+
+
+    public function getOrganizers($id) {
+        $event = Event::find($id);
+
+        if(empty($event))
+            return ApiResponseTrait::sendError("Can't Find Event");
+
+        return ApiResponseTrait::sendResponse("Event Organizers", $event->organizers);
+
     }
 
     /**

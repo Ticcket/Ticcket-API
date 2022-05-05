@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Attribute;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -49,12 +50,16 @@ class User extends Authenticatable
         return $this->hasMany(Ticket::class);
     }
 
-    public function Organizer() {
-        return $this->belongsToMany(Organizer::class);
+    public function organizers() {
+        return $this->belongsToMany(Event::class, 'organizers');
     }
 
     public function feedback() {
         return $this->hasMany(Feedback::class);
+    }
+
+    public function event() {
+        return $this->hasMany(Event::class, 'creator');
     }
 
     public static function getUserByToken($token) {
