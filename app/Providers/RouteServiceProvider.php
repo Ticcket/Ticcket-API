@@ -38,6 +38,7 @@ class RouteServiceProvider extends ServiceProvider
                 // Other routes With The Same Middlewar
                 Route::prefix('api/')->group(base_path('routes/eventRoutes.php'));
                 Route::prefix('api/')->group(base_path('routes/ticketRoutes.php'));
+                Route::prefix('api/')->group(base_path('routes/organizerRoutes.php'));
             });
 
             Route::middleware('web')
