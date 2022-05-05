@@ -50,4 +50,14 @@ class UsersController extends Controller
 
         return ApiResponseTrait::sendResponse("User Data Was Updated Successfully", auth()->user());
     }
+
+    public function getUserEvents() {
+
+        return ApiResponseTrait::sendResponse("Got My Events Successfully", auth()->user()->event ?? []);
+    }
+
+    public function getUserOrganize() {
+
+        return ApiResponseTrait::sendResponse("User Organizing Events", auth()->user()->organize ?? []);
+    }
 }

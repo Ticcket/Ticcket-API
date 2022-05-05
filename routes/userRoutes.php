@@ -20,4 +20,8 @@ Route::post('/u/photo', [UsersController::class, 'uploadPhoto'])->name('user.u.p
 
 Route::put('/', [UsersController::class, 'update'])->name('user.update');
 
+Route::get('/events', [UsersController::class, 'getUserEvents'])->name('user.events');
+
+Route::get('/organize', [UsersController::class, 'getUserOrganize'])->name('user.organzie');
+
 Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
