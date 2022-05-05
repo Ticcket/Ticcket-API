@@ -1,5 +1,6 @@
 <?php
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
 
 function uploadImage($img, $title, $disk = 'events') {
 
@@ -15,4 +16,10 @@ function deleteImage($image, $disk = 'events') {
     $ph = end($ph);
     Storage::disk('users')->delete($ph);
 
+}
+
+function isEventOwner($token, $id) {
+    $u = User::getUserByToken($token);
+
+    return $u->event()->where('id', $id)->exists();
 }
