@@ -60,4 +60,12 @@ class UsersController extends Controller
 
         return ApiResponseTrait::sendResponse("User Organizing Events", auth()->user()->organizers ?? []);
     }
+
+    public function getUserTickets() {
+        $tickets = auth()->user()->ticket->each(function ($t) {
+            $t->event;
+        });
+
+        return ApiResponseTrait::sendResponse("User Tickets", $tickets);
+    }
 }

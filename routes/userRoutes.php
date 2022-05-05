@@ -24,4 +24,6 @@ Route::get('/events', [UsersController::class, 'getUserEvents'])->name('user.eve
 
 Route::get('/organize', [UsersController::class, 'getUserOrganize'])->name('user.organzie');
 
+Route::get('/tickets', [UsersController::class, 'getUserTickets'])->name('user.tickets');
+
 Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
