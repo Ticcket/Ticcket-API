@@ -58,6 +58,6 @@ class UsersController extends Controller
 
     public function getUserOrganize() {
 
-        return ApiResponseTrait::sendResponse("User Organizing Events", auth()->user()->organize ?? []);
+        return ApiResponseTrait::sendResponse("User Organizing Events", auth()->user()->organizers ?? []);
     }
 }
