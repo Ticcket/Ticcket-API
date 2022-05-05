@@ -19,7 +19,7 @@ class FeedbacksController extends Controller
 
         $f = Feedback::where('user_id', auth()->user()->id)->where('event_id', $validated['event_id'])->first();
         if (!empty($f))
-            return ApiResponseTrait::sendError('User Has Ticket Already', 409);
+            return ApiResponseTrait::sendError('User Got A Feedback Already', 409);
 
         $validated['user_id'] = auth()->user()->id;
 
@@ -32,7 +32,7 @@ class FeedbacksController extends Controller
         $feedback = Feedback::find($id); // select * form feebacks where id = $id;
 
         if (empty($feedback))
-            return ApiResponseTrait::sendError("Can't Find Feedback");
+            return ApiResponseTrait::sendError("Unsuccessful Delete");
 
         if(auth()->user()->id != $feedback->user_id)
             return ApiResponseTrait::sendError("Permission Denied", 403);
