@@ -18,4 +18,6 @@ Route::get('/test', function () {
 
 Route::post('/u/photo', [UsersController::class, 'uploadPhoto'])->name('user.u.photo');
 
+Route::put('/', [UsersController::class, 'update'])->name('user.update');
+
 Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
