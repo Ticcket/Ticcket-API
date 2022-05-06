@@ -31,5 +31,7 @@ Route::group(['prefix' => 'events'], function () {
 
     Route::get('/{id}/organizers', [EventsController::class, 'getOrganizers'])->name('events.organizers');
 
+    Route::get('/{id}/announcements', [EventsController::class, 'getEventAnnouncements'])->name('events.announcements');
+
     Route::get('/e/top', [EventsController::class, 'topEvents'])->name('events.top');
 });

@@ -124,6 +124,24 @@ class EventsController extends Controller
 
     }
 
+    public function getEventAnnouncements($id) {
+        $event = Event::find($id);
+
+        if(empty($event))
+            return ApiResponseTrait::sendError("Can't Find Event");
+
+        $ann = [];
+        foreach ($event->announcements as $a) {
+            $ann[] = [
+                "name" => $a->name,
+                "announcement" => $a->pivot->message,
+                "created_at" => $a->pivot->created_at,
+            ];
+        }
+
+        return ApiResponseTrait::sendResponse("Event Announcements", $ann);
+    }
+
     /**
      * Update the specified resource in storage.
      *

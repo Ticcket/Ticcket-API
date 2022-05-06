@@ -63,7 +63,7 @@ class User extends Authenticatable
     }
 
     public function announcements() {
-        return $this->belongsToMany(Event::class, 'announcements');
+        return $this->belongsToMany(Event::class, 'announcements')->withTimestamps()->withPivot('message');
     }
 
     public static function getUserByToken($token) {

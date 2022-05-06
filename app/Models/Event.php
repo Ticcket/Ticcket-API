@@ -36,8 +36,8 @@ class Event extends Model
         return $this->belongsToMany(User::class, 'organizers');
     }
 
-    public function announcement() {
-        return $this->belongsToMany(User::class, 'announcements');
+    public function announcements() {
+        return $this->belongsToMany(User::class, 'announcements')->withTimestamps()->withPivot('message');
     }
 
     public function feedback() {
