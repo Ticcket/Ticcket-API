@@ -37,7 +37,7 @@ class Event extends Model
     }
 
     public function announcement() {
-        return $this->belongsToMany(Announcement::class);
+        return $this->belongsToMany(User::class, 'announcements');
     }
 
     public function feedback() {

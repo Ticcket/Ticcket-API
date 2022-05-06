@@ -62,6 +62,10 @@ class User extends Authenticatable
         return $this->hasMany(Event::class, 'creator');
     }
 
+    public function announcements() {
+        return $this->belongsToMany(Event::class, 'announcements');
+    }
+
     public static function getUserByToken($token) {
         [$id, $user_token] = explode('|', $token, 2);
 

@@ -40,6 +40,21 @@ class OrganizersController extends Controller
         return ApiResponseTrait::sendResponse("Scanned Successfully", $ticket);
     }
 
+    public function makeAnnouncement(Request $request) {
+
+        $validatated = $request->validate([
+            'message' => 'required|string',
+            'event_id' => 'required|numeric|exists:events,id',
+        ]);
+
+        if(!auth()->user()->organizers()->where('event_id', $validatated['event_id'])->exists())
+            return ApiResponseTrait::sendError("Permission Denied", 403);
+
+        auth()->user()->announcements()->attach($validatated['event_id'], ["message" => $validatated['message']]);
+
+        return ApiResponseTrait::sendResponse("An Announcement Has Been Added", $validatated);
+    }
+
     /**
      * Store a newly created resource in storage.
      *

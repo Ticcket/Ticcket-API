@@ -22,4 +22,5 @@ Route::group(['prefix' => 'organizers'], function (){
     Route::post('/', [OrganizersController::class, 'store']);
     Route::delete('/', [OrganizersController::class, 'destroy']);
     Route::post('/scan', [OrganizersController::class, 'scanTicket']);
+    Route::post('/announcement', [OrganizersController::class, 'makeAnnouncement']);
 });
