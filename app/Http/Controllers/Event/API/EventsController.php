@@ -192,7 +192,9 @@ class EventsController extends Controller
 
         $event->update($validated);
 
-        return ApiResponseTrait::sendResponse('Event Logo Updated Successfully', []);
+        return ApiResponseTrait::sendResponse('Event Logo Updated Successfully', [
+            "url" => $event->logo
+        ]);
     }
 
     /**
