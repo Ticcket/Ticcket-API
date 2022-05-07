@@ -63,6 +63,7 @@ class UsersController extends Controller
 
     public function getUserTickets() {
         $tickets = auth()->user()->ticket->each(function ($t) {
+            $t-> url = "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$t->token}&choe=UTF-8";
             $t->event;
         });
 
