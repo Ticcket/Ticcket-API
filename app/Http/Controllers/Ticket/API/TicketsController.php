@@ -70,7 +70,10 @@ class TicketsController extends Controller
      */
     public function destroy($id)
     {
-        $ticket = Ticket::find($id);
+        if(empty(Ticket::with('event')->find($id)->event))
+            return ApiResponseTrait::sendError("Can't Find Event");
+
+        $ticket = Ticket::where('event_id', $id)->where('user_id', auth()->user()->id)->first();
 
         if(empty($ticket))
             return ApiResponseTrait::sendError('Unsuccessful Delete');
@@ -80,6 +83,6 @@ class TicketsController extends Controller
 
         $ticket->delete();
 
-        return ApiResponseTrait::sendResponse("Event Deleted Successfully", []);
+        return ApiResponseTrait::sendResponse("Ticket Deleted Successfully", []);
     }
 }
