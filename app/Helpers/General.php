@@ -4,7 +4,7 @@ use App\Models\User;
 
 function uploadImage($img, $title, $disk = 'events') {
 
-    $img_name = time() . '-' . strtolower($title) . '.' .$img->extension();
+    $img_name = time() . '-' . strtolower(str_replace(" ", "_", $title)) . '.' .$img->extension();
 
     $img->storeAs('/', $img_name, $disk);
 
