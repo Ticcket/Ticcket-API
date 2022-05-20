@@ -3,7 +3,8 @@ namespace App\Http\Controllers\SharedTraits;
 
 use App\Mail\{
     WelcomeEmail,
-    TicketEmail
+    TicketEmail,
+    AnonymousTicketEmail
 };
 use Illuminate\Support\Facades\Mail;
 
@@ -21,10 +22,10 @@ trait EmailTrait {
         Mail::to($to_email)->send(new WelcomeEmail());
     }
 
-    public static function sendTicket($t) {
-        $to_email = $t->user->email;
+    public static function sendTicket($t, $template = TicketEmail::class) {
+        $to_email = $t->user->email ?? $t->email;
         // Working Line
-        Mail::to($to_email)->send(new TicketEmail($t));
+        Mail::to($to_email)->send(new $template($t));
     }
 
 }

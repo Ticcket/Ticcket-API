@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Ticket\Web\TicketsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,7 @@ Route::get('/', function () {
     // abort(404);
     return view('welcome');
 });
+
+Route::get("/form/event/{event}", [TicketsController::class, 'show']);
+
+Route::post("/form/event", [TicketsController::class, 'store']);
