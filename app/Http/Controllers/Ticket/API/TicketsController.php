@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Ticket\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\SharedTraits\ApiResponseTrait;
+use App\Http\Controllers\SharedTraits\EmailTrait;
 use Illuminate\Support\Str;
 use App\Models\Ticket;
 
@@ -24,14 +25,16 @@ class TicketsController extends Controller
             'event_id' => 'required|numeric|exists:events,id',
         ]);
 
-        $t = Ticket::where('user_id', $validated['user_id'])->where('event_id', $validated['event_id'])->first();
+        $t = Ticket::where('user_id', $validated['user_id'])->where('event_id', $validated['event_id'])->exists();
 
-        if(!empty($t))
+        if($t)
             return ApiResponseTrait::sendError('User Has A Ticket Already', 409);
 
         $validated['token'] = Str::random(10);
 
         $ticket = Ticket::create($validated);
+
+        EmailTrait::sendTicket($ticket);
 
         $ticket->url = "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$ticket->token}&choe=UTF-8";
 

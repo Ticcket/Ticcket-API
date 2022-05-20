@@ -44,7 +44,7 @@
                         </g>
                     </svg>
 
-                    <h2>&nbsp;Ticcket Server Is Working</h2>
+                    <h2 class="mt-2 text-gray-600 dark:text-gray-400 text-sm">&nbsp;Ticcket Server Is Working</h2>
                 </div>
 
                 <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
