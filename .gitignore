@@ -12,5 +12,6 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-app/Mail
-resources/views/mail
+app/Mail/WelcomeEmail.php
+app/Mail/Test.php
+resources/views/mail/welcome-email.blade.php
