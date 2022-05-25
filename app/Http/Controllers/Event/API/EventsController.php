@@ -108,8 +108,8 @@ class EventsController extends Controller
         $limit = isset($validated['limit']) ? $validated['limit'] : 5;
 
         // select * from events inner join feedbacks on events.id = feedbacks.event_id order by rating DESC limit 10;
-        $topEvents = Event::join('feedbacks', 'events.id', '=', 'feedbacks.event_id')->orderBy('rating', 'DESC')->limit($limit)->get();
-
+        //$topEvents = Event::join('feedbacks', 'events.id', '=', 'feedbacks.event_id')->orderBy('rating', 'DESC')->limit($limit)->get();
+        $topEvents = DB::select("CALL get_top_events(?)", [$limit]);
         return ApiResponseTrait::sendResponse('Get Top Events', $topEvents);
     }
 
