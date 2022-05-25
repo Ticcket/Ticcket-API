@@ -15,3 +15,4 @@ yarn-error.log
 app/Mail/WelcomeEmail.php
 app/Mail/Test.php
 resources/views/mail/welcome-email.blade.php
+ticcket.sql
