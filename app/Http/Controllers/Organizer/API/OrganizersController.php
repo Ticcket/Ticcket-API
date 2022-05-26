@@ -37,7 +37,13 @@ class OrganizersController extends Controller
 
         $ticket->update(['scanned' => 1]);
 
-        return ApiResponseTrait::sendResponse("Scanned Successfully", $ticket);
+        $res = [
+            "event_id" => $ticket->event_id,
+            "token" => $ticket->token,
+            "user" => $ticket->user,
+        ];
+
+        return ApiResponseTrait::sendResponse("Scanned Successfully", $res);
     }
 
     public function makeAnnouncement(Request $request) {
