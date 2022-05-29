@@ -16,12 +16,10 @@ class AuthController extends Controller
         ]);
 
         if(auth()->attempt($vaildated)) {
-
-            $token = auth()->user()->createToken("loginToken")->plainTextToken;
-
-            return ApiResponseTrait::sendResponse('Successful Login', [
-                'token' => $token
-            ]);
+            $user = auth()->user();
+            $token = $user->createToken("loginToken")->plainTextToken;
+            $user->token = $token;
+            return ApiResponseTrait::sendResponse('Successful Login', $user);
         }
 
         return ApiResponseTrait::sendError('Unsuccessful Login', 401);
@@ -43,11 +41,9 @@ class AuthController extends Controller
 
         $token = $user->createToken("registerToken")->plainTextToken;
 
-        return ApiResponseTrait::sendResponse('User Was Created Successfully', [
-            'id' => $user->id,
-            'email' => $validated['email'],
-            'token' => $token
-        ]);
+        $user->token = $token;
+
+        return ApiResponseTrait::sendResponse('User Was Created Successfully', $user);
     }
 
     public function logout() {
