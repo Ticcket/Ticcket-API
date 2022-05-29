@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Ticket\API\TicketsController;
 /*
 |--------------------------------------------------------------------------
-| Event API Routes => http://localhost:8000/api/events
+| Ticket API Routes => http://localhost:8000/api/tickets
 |--------------------------------------------------------------------------
 */
 
