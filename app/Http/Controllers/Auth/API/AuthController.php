@@ -39,11 +39,7 @@ class AuthController extends Controller
             'password' => bcrypt($validated['password']),
         ]);
 
-        $token = $user->createToken("registerToken")->plainTextToken;
-
-        $user->token = $token;
-
-        return ApiResponseTrait::sendResponse('User Was Created Successfully', $user);
+        return ApiResponseTrait::sendResponse('User Was Created Successfully', []);
     }
 
     public function logout() {
