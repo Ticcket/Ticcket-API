@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name', 100);
             $table->string('email');
             $table->string('token', 20);
-            $table->boolean("scanned");
+            $table->boolean("scanned")->default(0);
             $table->foreignId('event_id')->constrained('events')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
