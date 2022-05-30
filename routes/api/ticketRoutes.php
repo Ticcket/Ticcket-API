@@ -20,4 +20,10 @@ use App\Http\Controllers\Ticket\API\TicketsController;
 |--------------------------------------------------------------------------
 */
 
-Route::apiResource('/tickets', TicketsController::class)->except(['index', 'update']);
+// Route::apiResource('/tickets', TicketsController::class)->except(['index', 'update']);
+
+Route::post('/tickets', [TicketsController::class, 'store']);
+
+Route::get('/tickets/{id}', [TicketsController::class, 'show']);
+
+Route::delete('/tickets/{id}', [TicketsController::class, 'destroy']);
