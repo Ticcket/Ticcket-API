@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string("title", 100);
             $table->text("description");
             $table->string("logo", 100)->nullable();
+            // $table->string("location", 100);
             $table->foreignId('creator')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->date("start_at");
             $table->date("end_at");

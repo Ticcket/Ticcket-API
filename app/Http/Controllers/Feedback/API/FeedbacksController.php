@@ -29,7 +29,7 @@ class FeedbacksController extends Controller
     }
 
     public function destroy($id) {
-        $feedback = Feedback::find($id); // select * form feebacks where id = $id;
+        $feedback = Feedback::where('event_id', $id)->where('user_id', auth()->user()->id)->first(); // select * form feebacks where user_id = $userid, event_id = $id;
 
         if (empty($feedback))
             return ApiResponseTrait::sendError("Unsuccessful Delete");

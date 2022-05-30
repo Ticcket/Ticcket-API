@@ -8,6 +8,7 @@ use App\Http\Requests\OragnizerRequest;
 use App\Http\Controllers\SharedTraits\ApiResponseTrait;
 use App\Models\User;
 use App\Models\Ticket;
+use App\Models\AnonymousTicket as AnTicket;
 
 class OrganizersController extends Controller
 {
@@ -20,7 +21,7 @@ class OrganizersController extends Controller
     public function scanTicket(Request $request)
     {
         $validatated = $request->validate([
-            'ticket' => "required|string|max:10|exists:tickets,token",
+            'ticket' => "required|string|max:10",
             "event_id" => "required|numeric|exists:events,id",
         ]);
 
@@ -28,8 +29,11 @@ class OrganizersController extends Controller
             return ApiResponseTrait::sendError("Permission Denied", 403);
 
         $ticket = Ticket::where('token', $validatated['ticket'])->where('event_id', $validatated['event_id'])->first();
-        if(empty($ticket))
-        return ApiResponseTrait::sendError("Invalid Ticket", 422);
+        if(empty($ticket)) {
+            $ticket = AnTicket::where('token', $validatated['ticket'])->where('event_id', $validatated['event_id'])->first();
+            if(empty($ticket))
+                return ApiResponseTrait::sendError("Invalid Ticket", 422);
+        }
 
         // ***********************************
         // Give Error If Already Scanned ?
@@ -40,7 +44,7 @@ class OrganizersController extends Controller
         $res = [
             "event_id" => $ticket->event_id,
             "token" => $ticket->token,
-            "user" => $ticket->user,
+            "user" => $ticket->user ?? "anonymous",
         ];
 
         return ApiResponseTrait::sendResponse("Scanned Successfully", $res);
