@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreignId('creator')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->date("start_at");
             $table->date("end_at");
-            $table->softDeletes();
+            // $table->softDeletes();
             $table->timestamps();
         });
     }
