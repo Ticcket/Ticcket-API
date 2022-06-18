@@ -37,6 +37,7 @@ class AuthController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => bcrypt($validated['password']),
+            'photo' => "https://ui-avatars.com/api/?background=random&size=200&name=" . urlencode($validated['name']),
         ]);
 
         return ApiResponseTrait::sendResponse('User Was Created Successfully', []);

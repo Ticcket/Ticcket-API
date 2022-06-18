@@ -8,7 +8,7 @@ function uploadImage($img, $title, $disk = 'events') {
 
     $img->storeAs('/', $img_name, $disk);
 
-    return 'storage/'. $disk . '/'. $img_name;
+    return env("APP_URL") . '/storage/'. $disk . '/'. $img_name;
 }
 
 function deleteImage($image, $disk = 'events') {
