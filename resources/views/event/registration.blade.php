@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="mt-10 max-w-md m-auto">
-        <img src="{{ asset($event->logo) }}" alt="{{ $event->title }}" class="m-auto h-32">
+        <img src="{{ $event->logo }}" alt="{{ $event->title }}" class="m-auto h-32">
     </div>
     <div class="w-full max-w-xs m-auto mt-10">
         <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="{{ url('/form/event') }}" method="POST">
