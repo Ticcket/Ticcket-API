@@ -14,14 +14,13 @@ return new class extends Migration
      */
     public function up()
     {
-        $procedure = "
 
-        CREATE PROCEDURE IF NOT EXISTS `get_top_events`(IN `mlimit` SMALLINT(10) UNSIGNED)
+        $procedure = "
+        CREATE PROCEDURE IF NOT EXISTS `get_event_rating`(IN `id` SMALLINT(10) UNSIGNED)
         BEGIN
 
-        SELECT * FROM `events`
-        INNER JOIN `feedbacks` ON `events`.id = `feedbacks`.event_id
-        ORDER BY rating DESC LIMIT `mlimit`;
+        SELECT AVG(`feedbacks`.rating) FROM `events`
+        INNER JOIN `feedbacks` ON `feedbacks`.event_id = `id`;
 
         END;
         ";
@@ -35,7 +34,7 @@ return new class extends Migration
      */
     public function down()
     {
-        $sql = "DROP PROCEDURE IF EXISTS get_top_events";
+        $sql = "DROP PROCEDURE IF EXISTS get_event_rating";
         DB::unprepared($sql);
     }
 };
