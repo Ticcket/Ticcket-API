@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use PhpParser\Node\Expr\FuncCall;
+use Illuminate\Support\Facades\DB;
 
 class Event extends Model
 {
@@ -27,6 +29,9 @@ class Event extends Model
         'updated_at',
     ];
 
+    public function getRatingAttribute() {
+        return ((array) DB::select("CALL get_event_rating(?)", [$this->id])[0])['rating'];
+    }
 
     public function ticket() {
         return $this->hasMany(Ticket::class);

@@ -19,7 +19,7 @@ return new class extends Migration
         CREATE PROCEDURE IF NOT EXISTS `get_event_rating`(IN `id` SMALLINT(10) UNSIGNED)
         BEGIN
 
-        SELECT AVG(`feedbacks`.rating) FROM `events`
+        SELECT AVG(`feedbacks`.rating) AS rating FROM `events`
         INNER JOIN `feedbacks` ON `feedbacks`.event_id = `id`;
 
         END;

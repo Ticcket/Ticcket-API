@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use App\Http\Controllers\SharedTraits\ApiResponseTrait;
+use Hamcrest\Core\HasToString;
 use Illuminate\Support\Facades\DB;
 
 class EventsController extends Controller
@@ -96,6 +97,8 @@ class EventsController extends Controller
 
         if(empty($event))
             return ApiResponseTrait::sendError("Can't Find Event");
+
+        $event->setAttribute('rating', 'de');
 
         return ApiResponseTrait::sendResponse('Got Event Successfully', $event);
     }
