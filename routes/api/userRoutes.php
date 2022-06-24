@@ -27,3 +27,5 @@ Route::get('/organize', [UsersController::class, 'getUserOrganize'])->name('user
 Route::get('/tickets', [UsersController::class, 'getUserTickets'])->name('user.tickets');
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
+
+Route::post('/search', [UsersController::class, 'search'])->name('user.search');

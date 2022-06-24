@@ -10,6 +10,24 @@ use App\Models\User;
 
 class UsersController extends Controller
 {
+
+    public function search(Request $request) {
+        $validated = $request->validate([
+            'name' => 'required|string',
+            'limit' => 'numaric|max:20',
+        ]);
+
+        $limit = isset($validated['limit']) ? $validated['limit'] : 5;
+
+        $users = User::where('name', 'LIKE', "%{$validated['name']}%")->limit($limit)->get();
+
+        return ApiResponseTrait::sendResponse("", [
+            'count' => $users->count(),
+            'result' => $users,
+        ]);
+
+    }
+
     public function uploadPhoto(Request $request) {
         $request->validate([
             'photo' => 'required|mimes:png,jpg,jpeg|max:10000',
