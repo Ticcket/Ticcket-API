@@ -19,7 +19,9 @@ class EventsController extends Controller
     public function index()
     {
         $events = Event::paginate(10);
-
+        $events->map(function ($e, $key) {
+            return $e->setAttribute('rating', 'da');
+        });
         return $events;
     }
 
