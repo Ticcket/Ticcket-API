@@ -14,6 +14,7 @@ class AnonymousTicket extends Model
         'email',
         'token',
         'event_id',
+        "scanned",
     ];
 
     public function event() {

@@ -39,7 +39,7 @@ class OrganizersController extends Controller
         // Give Error If Already Scanned ?
         // ***********************************
 
-        $ticket->update(['scanned' => 1]);
+        $ticket->update(["scanned" => 1]);
 
         $res = [
             "event_id" => $ticket->event_id,
