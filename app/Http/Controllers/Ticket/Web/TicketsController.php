@@ -24,7 +24,7 @@ class TicketsController extends Controller
             'name' => 'required|string|max:30',
         ]);
 
-        $t =  AnTicket::where('email', $validated['email']);
+        $t =  AnTicket::where('email', $validated['email'])->where('event_id', $validated['event_id']);
         if($t->exists()){
             $ticket =$t->first();
             $ticket->url = "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$ticket->token}&choe=UTF-8";
