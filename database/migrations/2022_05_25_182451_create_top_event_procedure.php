@@ -19,9 +19,9 @@ return new class extends Migration
         CREATE PROCEDURE IF NOT EXISTS `get_top_events`(IN `mlimit` SMALLINT(10) UNSIGNED)
         BEGIN
 
-        SELECT * FROM `events`
+        SELECT `events`.*, AVG(`feedbacks`.rating) As rating FROM `events`
         INNER JOIN `feedbacks` ON `events`.id = `feedbacks`.event_id
-        ORDER BY rating DESC LIMIT `mlimit`;
+        ORDER BY rating ASC LIMIT `mlimit`;
 
         END;
         ";
