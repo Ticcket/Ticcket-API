@@ -28,4 +28,4 @@ Route::get('/tickets', [UsersController::class, 'getUserTickets'])->name('user.t
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('user.logout');
 
-Route::post('/search', [UsersController::class, 'search'])->name('user.search');
+Route::get('/search', [UsersController::class, 'search'])->name('user.search');
