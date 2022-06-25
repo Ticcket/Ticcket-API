@@ -124,7 +124,7 @@ class EventsController extends Controller
         if(empty($event))
             return ApiResponseTrait::sendError("Can't Find Event");
 
-        return ApiResponseTrait::sendResponse("Event Feedbacks", $event->feedback()->paginate(10));
+        return ApiResponseTrait::sendResponse("Event Feedbacks", $event->feedback);
     }
 
     public function getOrganizers($id) {
