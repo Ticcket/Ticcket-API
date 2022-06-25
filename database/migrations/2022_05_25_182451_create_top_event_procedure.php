@@ -21,6 +21,7 @@ return new class extends Migration
 
         SELECT `events`.*, AVG(`feedbacks`.rating) As rating FROM `events`
         INNER JOIN `feedbacks` ON `events`.id = `feedbacks`.event_id
+        GROUP By `feedbacks`.event_id
         ORDER BY rating ASC LIMIT `mlimit`;
 
         END;
