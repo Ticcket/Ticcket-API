@@ -77,13 +77,19 @@ class UsersController extends Controller
     }
 
     public function getUserOrganize() {
+        $orgs = [];
+        if (auth()->user()->organizers != null) {
+            auth()->user()->organizers->each(function ($o) {
+                $o->setAttribute('rating', 'da');
+            });
+        }
 
         return ApiResponseTrait::sendResponse("User Organizing Events", auth()->user()->organizers ?? []);
     }
 
     public function getUserTickets() {
         $tickets = auth()->user()->ticket->each(function ($t) {
-            $t-> url = "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$t->token}&choe=UTF-8";
+            $t->url = "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$t->token}&choe=UTF-8";
             $t->event;
         });
 
