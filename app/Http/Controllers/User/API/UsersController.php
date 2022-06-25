@@ -13,13 +13,15 @@ class UsersController extends Controller
 
     public function search(Request $request) {
         $validated = $request->validate([
-            'name' => 'required|string',
+            'name' => 'required_without:email|string',
+            'email' => 'required_without:name|string',
             'limit' => 'numaric|max:20',
         ]);
-
         $limit = isset($validated['limit']) ? $validated['limit'] : 5;
+        $field = isset($validated['name']) ? 'name' : 'email';
+        // return $validated;
 
-        $users = User::where('name', 'LIKE', "%{$validated['name']}%")->limit($limit)->get();
+        $users = User::where($field, 'LIKE', "%{$validated[$field]}%")->limit($limit)->get();
 
         return ApiResponseTrait::sendResponse("", [
             'count' => $users->count(),
