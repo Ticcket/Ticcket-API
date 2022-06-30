@@ -45,6 +45,7 @@ class OrganizersController extends Controller
             "event_id" => $ticket->event_id,
             "token" => $ticket->token,
             "user" => $ticket->user ?? [
+                "id" => $ticket->id,
                 "name" => $ticket->name,
                 "email" => $ticket->email,
                 "email_verified_at" => null,
