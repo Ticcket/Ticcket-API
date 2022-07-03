@@ -36,7 +36,7 @@ class SendTicketMail extends Command
         $template = $this->option("template");
 
         if(!empty($template)){
-            if(!class_exists($template)) {
+            if(!class_exists($template . '::class')) { // There Is A Bug Here
                 $this->error("There Isn't Email with this template");
                 return 0;
             }
