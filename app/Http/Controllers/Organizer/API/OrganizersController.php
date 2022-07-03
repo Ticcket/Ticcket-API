@@ -44,7 +44,15 @@ class OrganizersController extends Controller
         $res = [
             "event_id" => $ticket->event_id,
             "token" => $ticket->token,
-            "user" => $ticket->user ?? "anonymous",
+            "user" => $ticket->user ?? [
+                "id" => $ticket->id,
+                "name" => $ticket->name,
+                "email" => $ticket->email,
+                "email_verified_at" => null,
+                "photo" => "https://ui-avatars.com/api/?background=random&size=200&name=" . urlencode($ticket->name),
+                "created_at" => null,
+                "updated_at" => null,
+            ],
         ];
 
         return ApiResponseTrait::sendResponse("Scanned Successfully", $res);
