@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('token', 20);
             $table->boolean("scanned")->default(0);
             $table->foreignId('event_id')->constrained('events')->onDelete('cascade')->onUpdate('cascade');
+            $table->boolean("sent")->default(0);
             $table->timestamps();
         });
     }
