@@ -13,6 +13,7 @@ class Itds6TicketEmail extends Mailable
     use Queueable, SerializesModels;
 
     public $ticket;
+    public $url;
 
     /**
      * Create a new message instance.
@@ -21,6 +22,7 @@ class Itds6TicketEmail extends Mailable
      */
     public function __construct($t)
     {
+        $this->url = "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$t->token}&choe=UTF-8";
         $this->ticket = $t;
     }
 
@@ -33,7 +35,7 @@ class Itds6TicketEmail extends Mailable
     {
         return $this->view("mail.itds6-email")->with("info", [
             "ticket_id"   => $this->ticket->token,
-            "ticket"            => $this->ticket->url,
+            "ticket"            => $this->url,
             "attendee_name"     => $this->ticket->name,
             "attendee_email"    => $this->ticket->email,
             "event"             => $this->ticket->event->title,

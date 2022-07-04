@@ -55,13 +55,13 @@ class SendTicketMail extends Command
 
         $bar->start();
         foreach($tickets as $t) {
-            $t->update([
-                'sent' => 1
-            ]);
-            $t->url = "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$t->token}&choe=UTF-8";
+
             if($t->sent == 0)
                 EmailTrait::sendTicket($t, $template);
 
+            $t->update([
+                'sent' => 1
+            ]);
             $bar->advance();
         }
         $bar->finish();
