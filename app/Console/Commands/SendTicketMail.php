@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Http\Controllers\SharedTraits\EmailTrait;
-use App\Mail\AnonymousTicketEmail;
+use App\Mail\Itds6TicketEmail;
 use App\Models\AnonymousTicket as AnTicket;
 use App\Models\Event;
 
@@ -41,7 +41,7 @@ class SendTicketMail extends Command
                 return 0;
             }
         }else {
-            $template = AnonymousTicketEmail::class;
+            $template = Itds6TicketEmail::class;
         }
 
         $not_exists = empty(Event::find($event_id));
