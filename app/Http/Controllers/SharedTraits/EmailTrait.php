@@ -22,10 +22,12 @@ trait EmailTrait {
         Mail::to($to_email)->send(new WelcomeEmail());
     }
 
-    public static function sendTicket($t, $template = TicketEmail::class) {
+    public static function sendTicket($t, $template = TicketEmail::class, $when = "") {
+        if ($when === "")
+            $when = now();
         $to_email = $t->user->email ?? $t->email;
         // Working Line
-        Mail::to($to_email)->send(new $template($t));
+        Mail::to($to_email)->later($when, new $template($t));
     }
 
 }

@@ -57,7 +57,7 @@ class SendTicketMail extends Command
         foreach($tickets as $t) {
 
             $t->url = "https://chart.googleapis.com/chart?chs=300x300&cht=qr&chl={$t->token}&choe=UTF-8";
-            EmailTrait::sendTicket($t, $template);
+            EmailTrait::sendTicket($t, $template, now()->addSeconds(5));
 
             $bar->advance();
         }
