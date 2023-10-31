@@ -1,0 +1,31 @@
+services:
+  db:
+    image: mysql:latest
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=ticcket
+    healthcheck:
+      test: ["CMD", "mysqladmin", 'ping']
+      interval: 2s
+      timeout: 30s
+      retries: 5
+    networks:
+      network:
+        ipv4_address: 172.0.0.2
+  web:
+    build: .
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - 8080:8000
+    networks:
+      network:
+        ipv4_address: 172.0.0.3
+networks:
+  network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.0.0.0/16
+        - gateway: 172.0.0.1
