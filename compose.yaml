@@ -22,6 +22,10 @@ services:
     networks:
       network:
         ipv4_address: 172.0.0.3
+    volumes:
+      - type: bind
+        source: ./.env.container
+        target: /app/.env
 networks:
   network:
     driver: bridge
